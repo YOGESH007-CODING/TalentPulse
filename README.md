@@ -53,6 +53,11 @@ Suggested report pages:
 3. Build the report pages using the recommended fields and refresh the data after
    each new pipeline run.
 
+Power BI should be positioned as the decision-support layer: executives use it to
+see which issues deserve attention, while the Streamlit tab remains the review-level
+inference and demonstration interface. It should not be presented as the model or
+as a real-time production connection until a `.pbix` report and scheduled refresh
+are added.
 
 ## Metrics
 
