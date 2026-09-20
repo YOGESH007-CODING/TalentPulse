@@ -93,9 +93,21 @@ with dashboard_tab:
 
         bottom_left, bottom_right = st.columns(2)
         with bottom_left:
-            st.markdown("**Complaint aspects**")
+            st.markdown("**Executive action table**")
             if not aspects.empty:
-                st.dataframe(aspects, hide_index=True, use_container_width=True)
+                actions = {
+                    "battery": "Review battery life, charging reliability, and usage guidance",
+                    "compatibility": "Audit device/app compatibility and setup experience",
+                    "delivery": "Review fulfillment, packaging, and delivery exceptions",
+                    "price": "Assess value proposition, pricing, and refund drivers",
+                    "quality": "Investigate supplier quality and product reliability defects",
+                }
+                action_table = aspects.copy()
+                action_table["priority"] = range(1, len(action_table) + 1)
+                action_table["recommended_action"] = action_table["aspect"].map(actions).fillna("Review theme with product and operations owners")
+                action_table = action_table[["priority", "aspect", "complaint_volume", "average_rating", "recommended_action"]]
+                action_table = action_table.rename(columns={"aspect": "issue", "complaint_volume": "mentions", "average_rating": "avg_rating"})
+                st.dataframe(action_table, hide_index=True, use_container_width=True)
         with bottom_right:
             st.markdown("**Model performance**")
             if metrics.empty:

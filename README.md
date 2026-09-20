@@ -44,6 +44,9 @@ Suggested report pages:
    with verified-purchase and sentiment slicers.
 3. **Model performance:** cards or a clustered column chart comparing accuracy and
    macro-F1 by model.
+4. **Executive action table:** map each ranked issue to a suggested product or
+   operations follow-up, such as compatibility/setup review or supplier-quality
+   investigation.
 
 ### Power BI setup
 
@@ -57,7 +60,8 @@ Power BI should be positioned as the decision-support layer: executives use it t
 see which issues deserve attention, while the Streamlit tab remains the review-level
 inference and demonstration interface. The dashboard now surfaces business KPIs
 (complaint rate, average complaint rating, verified-purchase share, and top priority
-issue), while model scores remain supporting evidence. It should not be presented as the model or
+issue) and an executive action table, while model scores remain supporting evidence.
+It should not be presented as the model or
 as a real-time production connection until a `.pbix` report and scheduled refresh
 are added.
 
