@@ -67,14 +67,17 @@ with dashboard_tab:
         total_reviews = len(reviews)
         negative_reviews = int((reviews["sentiment"] == "Negative").sum())
         complaint_rate = negative_reviews / total_reviews if total_reviews else 0
+        negative_rating = reviews.loc[reviews["sentiment"] == "Negative", "star_rating"].mean()
+        verified_share = reviews["verified_purchase"].mean()
         top_aspect = aspects.iloc[0]["aspect"] if not aspects.empty else "—"
         top_volume = int(aspects.iloc[0]["complaint_volume"]) if not aspects.empty else 0
 
         kpi_1, kpi_2, kpi_3, kpi_4 = st.columns(4)
-        kpi_1.metric("Reviews analyzed", f"{total_reviews:,}")
-        kpi_2.metric("Negative reviews", f"{negative_reviews:,}", f"{complaint_rate:.1%} of sample")
-        kpi_3.metric("Top complaint aspect", str(top_aspect).title())
-        kpi_4.metric("Top aspect volume", f"{top_volume:,}")
+        kpi_1.metric("Complaint rate", f"{complaint_rate:.1%}", f"{negative_reviews:,} of {total_reviews:,} reviews")
+        kpi_2.metric("Avg. complaint rating", f"{negative_rating:.2f} / 5")
+        kpi_3.metric("Verified-purchase share", f"{verified_share:.1%}")
+        kpi_4.metric("Top priority issue", str(top_aspect).title(), f"{top_volume:,} mentions")
+        st.info("Business readout: prioritize the top issue with the highest complaint volume and lowest average rating, then use verified-purchase share to judge how broadly the signal is distributed.")
 
         left, right = st.columns(2)
         with left:

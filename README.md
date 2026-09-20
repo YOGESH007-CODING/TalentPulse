@@ -55,7 +55,9 @@ Suggested report pages:
 
 Power BI should be positioned as the decision-support layer: executives use it to
 see which issues deserve attention, while the Streamlit tab remains the review-level
-inference and demonstration interface. It should not be presented as the model or
+inference and demonstration interface. The dashboard now surfaces business KPIs
+(complaint rate, average complaint rating, verified-purchase share, and top priority
+issue), while model scores remain supporting evidence. It should not be presented as the model or
 as a real-time production connection until a `.pbix` report and scheduled refresh
 are added.
 
