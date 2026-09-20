@@ -16,6 +16,44 @@ The checked local run materialized **5,000** reviews (a reduced cap used for CPU
 4. `src.aspect_extraction` tags negative reviews for battery, delivery, quality, compatibility, and price issues and ranks them by volume.
 5. `app/app.py` provides fast baseline inference for a lightweight Streamlit deployment.
 
+## Dashboard and reporting
+
+Power BI is the executive reporting layer for the batch pipeline. It reads the CSV
+outputs produced by the Python scripts and supports complaint prioritization,
+sentiment/rating analysis, and model monitoring. The project does not currently
+ship a `.pbix` file or a live data connection, so the dashboard should be refreshed
+after the pipeline regenerates the CSVs.
+
+Recommended Power BI sources:
+
+- `data/processed/reviews_clean.csv` — review-level sentiment, star rating, and
+  verified-purchase data for sentiment/rating distributions and slicers.
+- `data/processed/aspect_summary.csv` — complaint aspect volume and average rating
+  for the prioritization matrix.
+- `data/processed/baseline_metrics.csv` and
+  `data/processed/transformer_metrics.csv` — accuracy, macro-F1, and test-row
+  counts for model comparison. The transformer file is only populated after its
+  training command completes.
+
+Suggested report pages:
+
+1. **Complaint prioritization:** scatter plot with complaint volume on the X-axis,
+   average rating on the Y-axis, and aspect as the label. Lower ratings and higher
+   volume indicate higher investigation priority.
+2. **Sentiment and rating distribution:** sentiment share or star-rating charts
+   with verified-purchase and sentiment slicers.
+3. **Model performance:** cards or a clustered column chart comparing accuracy and
+   macro-F1 by model.
+
+### Power BI setup
+
+1. Run the data-preparation and analysis commands below so the CSV outputs exist.
+2. In Power BI Desktop, choose **Get data → Text/CSV** and load the files listed
+   above.
+3. Build the report pages using the recommended fields and refresh the data after
+   each new pipeline run.
+
+
 ## Metrics
 
 The real 5,000-review baseline run uses a 4,000/1,000 stratified split:
